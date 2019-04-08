@@ -14,6 +14,14 @@
 
 
 @implementation YFChessBtn
+- (void)setPined:(BOOL)pined{
+    _pined = pined;
+    if(_pined)
+        [self setImage:self.mod.pinedImg forState:0];
+    else
+        [self setImage:nil forState:0];
+}
+
 -(void)setShowTitle:(BOOL)showTitle{
     _showTitle = showTitle;
     [self updateUI];
@@ -29,9 +37,11 @@
 }
 
 -(void)updateUI{
-    [self setBackgroundImage:self.mod.img forState:0];
+    [self setBackgroundImage:self.mod.bgimg forState:0];
     [self setTitleColor:self.mod.titleColor forState:0];
     self.titleLabel.font = iFont(11);
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.imageView.contentMode = UIViewContentModeCenter;
     [self setTitle:self.showTitle ? self.mod.title : @"" forState:0];
     [self setTitleColor:iGlobalFocusColor forState:(UIControlStateSelected)];
 }
@@ -48,6 +58,12 @@
     lpgest.delegate = dele;
     btn.lpGest = lpgest;
     return btn;
+}
+-(CGRect)imageRectForContentRect:(CGRect)contentRect{
+    return contentRect;
+}
+-(CGRect)titleRectForContentRect:(CGRect)contentRect{
+    return contentRect;
 }
 
 @end

@@ -9,6 +9,8 @@
 
 #import "YFCodecObj.h"
 #import "YFChessBoard.h"
+@class YFChessFragment;
+
 
 typedef NS_ENUM(NSUInteger, RoundType) {
     RoundTypeNormal,//轮流循环
@@ -39,7 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - round
 -(void)beginNextRound;
 -(BOOL)canPlayThisRoundAt:(int)x y:(int)y;
--(void)doneThisRound;
+
+
+/**
+结束本轮，并且判断是否需要计算提子，如果计算，则返回被提的子数组
+ @param cal 是否计算提子
+ @return 被提子的数组,相连的子为一个YFChessFragment
+ */
+-(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal;
 -(void)prevRound;
 -(BOOL)chess:(YFChess *) chess canPlayAtX:(int)x y:(int)y;
 

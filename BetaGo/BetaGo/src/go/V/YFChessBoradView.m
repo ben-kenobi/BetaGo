@@ -7,6 +7,7 @@
 //
 
 #import "YFChessBoradView.h"
+#import "YFChessFragment.h"
 
 @interface YFChessBoradView()<YFChessLPActionDele>
 {
@@ -21,6 +22,7 @@
 @property (nonatomic,strong)NSArray<UIView *> *hightLightedLines;
 
 @property (nonatomic,strong)NSMutableDictionary<YFChess *,YFChessBtn *> *chessBtns;
+
 @end
 
 @implementation YFChessBoradView
@@ -219,10 +221,22 @@
 
 -(void)endAddChess:(YFChessBtn *)btn{
     [self.chessBtns setObject:btn forKey:btn.mod];
-    [self.match doneThisRound];
+    NSArray<YFChessFragment *> *rmChessList = [self.match doneThisRound:YES];
+    [self updateUIWithChessFragments:rmChessList];
+    
+    
     btn.showTitle=self.match.showRound;
     btn.done = YES;
     [self setHightLightedLines:nil color:0];
+}
+
+-(void)updateUIWithChessFragments:(NSArray<YFChessFragment *> *)fragments{
+    [self.chessBtns enumerateKeysAndObjectsUsingBlock:^(YFChess * _Nonnull key, YFChessBtn * _Nonnull obj, BOOL * _Nonnull stop) {
+        obj.pined = NO;
+    }];
+    for(YFChessFragment *frag in fragments){
+        [frag updateChessList:self.chessBtns];
+    }
 }
 
 -(void)addView:(UIView *)view atX:(int)x y:(int)y{
@@ -348,4 +362,6 @@
     _curChess.selected = YES;
 }
 
+
+iLazy4Dict(chessBtns, _chessBtns)
 @end

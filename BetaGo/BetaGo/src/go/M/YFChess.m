@@ -21,8 +21,12 @@
 }
 
 
--(UIImage *)img{
+-(UIImage *)bgimg{
     UIColor *color = self.black ? iColor(0x33, 0x33, 0x33, 1) : iColor(0xef, 0xef, 0xef, 1);
+    return [UIImage dotImg4Color:color rad:dp2po(7) imgSize:CGSizeMake(dp2po(16), dp2po(16))];
+}
+-(UIImage *)pinedImg{
+    UIColor *color = [iGlobalErrorColor colorWithAlphaComponent:.3];
     return [UIImage dotImg4Color:color rad:dp2po(7) imgSize:CGSizeMake(dp2po(16), dp2po(16))];
 }
 -(UIColor *)titleColor{

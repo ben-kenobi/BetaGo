@@ -37,6 +37,7 @@
 		B872AC992238D37F00C5A33B /* BCUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7A2238D37E00C5A33B /* BCUserInfoCell.m */; };
 		B872AC9A2238D37F00C5A33B /* BCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7B2238D37E00C5A33B /* BCCoverView.m */; };
 		B872AC9B2238D37F00C5A33B /* BCMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7C2238D37E00C5A33B /* BCMenuCell.m */; };
+		B8D33863225B68890049F846 /* YFChessFragment.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33862225B68890049F846 /* YFChessFragment.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,8 @@
 		B872AC7B2238D37E00C5A33B /* BCCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCCoverView.m; sourceTree = "<group>"; };
 		B872AC7C2238D37E00C5A33B /* BCMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCMenuCell.m; sourceTree = "<group>"; };
 		B872AC7D2238D37E00C5A33B /* BCUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUserInfoCell.h; sourceTree = "<group>"; };
+		B8D33861225B68890049F846 /* YFChessFragment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFChessFragment.h; sourceTree = "<group>"; };
+		B8D33862225B68890049F846 /* YFChessFragment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFChessFragment.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,11 +214,13 @@
 			isa = PBXGroup;
 			children = (
 				B872AC562238D37E00C5A33B /* YFChess.h */,
-				B872AC572238D37E00C5A33B /* YFMatch.m */,
-				B872AC582238D37E00C5A33B /* YFChessBoard.h */,
-				B872AC592238D37E00C5A33B /* YFMatch.h */,
 				B872AC5A2238D37E00C5A33B /* YFChess.m */,
+				B872AC582238D37E00C5A33B /* YFChessBoard.h */,
 				B872AC5B2238D37E00C5A33B /* YFChessBoard.m */,
+				B872AC592238D37E00C5A33B /* YFMatch.h */,
+				B872AC572238D37E00C5A33B /* YFMatch.m */,
+				B8D33861225B68890049F846 /* YFChessFragment.h */,
+				B8D33862225B68890049F846 /* YFChessFragment.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -233,9 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				B872AC602238D37E00C5A33B /* YFChessBtn.h */,
+				B872AC632238D37E00C5A33B /* YFChessBtn.m */,
 				B872AC612238D37E00C5A33B /* YFChessBoradView.h */,
 				B872AC622238D37E00C5A33B /* YFChessBoradView.m */,
-				B872AC632238D37E00C5A33B /* YFChessBtn.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -441,6 +446,7 @@
 				B872AC8E2238D37F00C5A33B /* YFGoMainVC.m in Sources */,
 				B872AC8F2238D37F00C5A33B /* YFChessBoradView.m in Sources */,
 				B872AC9B2238D37F00C5A33B /* BCMenuCell.m in Sources */,
+				B8D33863225B68890049F846 /* YFChessFragment.m in Sources */,
 				B872AC9A2238D37F00C5A33B /* BCCoverView.m in Sources */,
 				B872AC832238D37F00C5A33B /* BCBaseHttpClient.m in Sources */,
 				B872AC882238D37F00C5A33B /* AppDelegate.m in Sources */,

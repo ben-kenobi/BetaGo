@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - UI Property
-@property (nonatomic,readonly)UIImage *img;
+@property (nonatomic,readonly)UIImage *bgimg;
+@property (nonatomic,readonly)UIImage *pinedImg;
 @property (nonatomic,readonly)UIColor *titleColor;
 @property (nonatomic,readonly)NSString *title;
 +(instancetype)chessWith:(BOOL)black;

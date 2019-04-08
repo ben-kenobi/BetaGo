@@ -7,6 +7,7 @@
 //
 
 #import "YFMatch.h"
+#import "YFChessFragment.h"
 
 
 @implementation YFMatch
@@ -18,7 +19,7 @@
         for(int i=0;i<9;i++){
             [self beginNextRound];
             [self canPlayThisRoundAt:i y:0];
-            [self doneThisRound];
+            [self doneThisRound:NO];
         }
         self.showRound=YES;
         self.needConfirm=NO;
@@ -52,9 +53,14 @@
     y = MIN(MAX(0, y),self.board.numOfLines-1);
     return [self chess:self.curChess canPlayAtX:x y:y];
 }
--(void)doneThisRound{
+-(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal{
     [self.board addChess:self.curChess];
+    if(cal)
+        return [self calculateLibertyNrmDead];
+    return nil;
 }
+
+
 -(void)prevRound{
     
 }
@@ -63,6 +69,37 @@
     chess.x = x;chess.y = y;
     return [self.board canAdd:chess];
 }
+
+
+#pragma mark - calculate
+/**
+ 计算当前落子是否会产生提子
+ @return 返回需要提子的数组
+ */
+-(NSArray<YFChessFragment *> *)calculateLibertyNrmDead{
+    NSMutableArray<YFChessFragment *> *mary = [NSMutableArray array];
+    NSArray<YFChess *> * sibChesses = [self.board findSiblingChessBy:self.curChess];
+    
+    //迭代当前子四周的其他棋子，找出其他棋子的相连子，
+    for(int i=0;i<sibChesses.count;i++){
+        YFChess *chess = sibChesses[i];
+        if(chess.black == self.curChess.black) continue;//如果同色，则不计算
+        BOOL contain = NO;
+        for(YFChessFragment *frag in mary){
+            contain = [frag contain:chess];
+            if(contain){
+                break;
+            }
+        }
+        if(contain)continue;//如果已经计算过该子，则不在计算
+        
+        YFChessFragment *frag = [[YFChessFragment alloc]init];
+        [frag calLibertyAt:chess board:self.board];
+        [mary addObject:frag];
+    }
+    return mary;
+}
+            
 
 #pragma mark - move
 -(BOOL)canPlayAt:(int)x y:(int)y{

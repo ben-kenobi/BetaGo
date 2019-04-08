@@ -51,12 +51,47 @@
 
 #pragma mark - 增删改查
 -(YFChess *)findChessAt:(int)x y:(int)y{
+    if(x<0 || x > self.numOfLines-1  || y < 0 || y > self.numOfLines-1)
+        return nil;
     id obj = self.chessList[[self idxByx:x y:y]];
     if([obj isKindOfClass:YFChess.class]){
         return obj;
     }
     return nil;
 }
+-(NSArray<YFChess *> *)findSiblingChessBy:(YFChess *)chess{
+    NSMutableArray *mary = [NSMutableArray array];
+    YFChess *left = [self findChessAt:chess.x-1 y:chess.y];
+    YFChess *right = [self findChessAt:chess.x+1 y:chess.y];
+    YFChess *up = [self findChessAt:chess.x y:chess.y-1];
+    YFChess *down = [self findChessAt:chess.x y:chess.y+1];
+    if(left) [mary addObject:left];
+    if(right) [mary addObject:right];
+    if(up) [mary addObject:up];
+    if(down) [mary addObject:down];
+    return [NSArray arrayWithArray:mary];
+}
+
+-(NSArray *)findSiblingsBy:(YFChess *)chess{
+    NSMutableArray *mary = [NSMutableArray array];
+    YFChess *left = [self findItemAt:chess.x-1 y:chess.y];
+    YFChess *right = [self findItemAt:chess.x+1 y:chess.y];
+    YFChess *up = [self findItemAt:chess.x y:chess.y-1];
+    YFChess *down = [self findItemAt:chess.x y:chess.y+1];
+    if(left) [mary addObject:left];
+    if(right) [mary addObject:right];
+    if(up) [mary addObject:up];
+    if(down) [mary addObject:down];
+    return [NSArray arrayWithArray:mary];
+}
+
+-(id)findItemAt:(int)x y:(int)y{
+    if(x<0 || x > self.numOfLines-1  || y < 0 || y > self.numOfLines-1)
+        return nil;
+    id obj = self.chessList[[self idxByx:x y:y]];
+    return obj;
+}
+
 -(BOOL)canAdd:(YFChess *)chess{
     return [self canPlayAtX:chess.x y:chess.y];
 }
