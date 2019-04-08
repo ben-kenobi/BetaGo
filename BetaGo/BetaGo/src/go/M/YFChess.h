@@ -7,7 +7,7 @@
 //
 
 #import "YFCodecObj.h"
-
+@class YFChessBoard;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YFChess : YFCodecObj
@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)int x;
 @property (nonatomic,assign)int y;
 @property (nonatomic,assign)int round;
+@property (nonatomic,weak)YFChessBoard *board;
+@property (nonatomic,assign)BOOL done;//是否下定
 
 
+-(void)rmFromBoard;
 
 
 #pragma mark - UI Property

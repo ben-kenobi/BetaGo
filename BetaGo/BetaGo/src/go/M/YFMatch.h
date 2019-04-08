@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)BOOL needConfirm;//是否需要下子确认
 @property (nonatomic,assign)BOOL showRound;//是否需要在棋子上显示回合数
 @property (nonatomic,assign)BOOL canMove;//是否允许移动已经下好了的棋子
+@property (nonatomic,assign)BOOL needWarning;//是否需要被提预警
 -(instancetype)initMatchWith:(int)lines;
 
 
@@ -50,11 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal;
 -(void)prevRound;
--(BOOL)chess:(YFChess *) chess canPlayAtX:(int)x y:(int)y;
 
 #pragma mark - move
--(BOOL)canPlayAt:(int)x y:(int)y;
--(void)move:(YFChess *)chess toX:(int)x y:(int)y;
+-(BOOL)canPlayChess:(YFChess *)chess at:(int)x y:(int)y;
+-(NSArray<YFChessFragment *> *)move:(YFChess *)chess toX:(int)x y:(int)y cal:(BOOL)cal;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YFChessFragment : NSObject
 @property (nonatomic,strong)NSMutableArray<YFChess *> *list;
 
-@property (nonatomic,assign)BOOL free;//是否该集有气
+@property (nonatomic,assign)NSInteger liberty;//有多少气
+@property (nonatomic,readonly)BOOL free;//是否有气
+@property (nonatomic,assign)BOOL needWarning;
 
 -(BOOL)contain:(YFChess *)chess;
 

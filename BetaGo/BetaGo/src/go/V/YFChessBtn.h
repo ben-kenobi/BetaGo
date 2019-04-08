@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface YFChessBtn : UIButton
-@property (nonatomic,assign)BOOL done;//是否下定
 @property (nonatomic,assign)BOOL pined;
 @property (nonatomic,strong)YFChess *mod;
 @property (nonatomic,assign)BOOL showTitle;

@@ -13,14 +13,18 @@
 
 @implementation YFChessFragment
 
+
+
+
 -(void)updateChessList:(NSMutableDictionary<YFChess *,YFChessBtn *> *)dict{
     for(YFChess *chess in self.list){
         YFChessBtn *btn = dict[chess];
-        if(self.free)
-            btn.pined = YES;
-        else{
+        if(!self.free){
             [btn removeFromSuperview];
             [dict removeObjectForKey:chess];
+            [chess rmFromBoard];
+        }else if([self needPin]){
+            btn.pined = YES;
         }
     }
 }
@@ -45,9 +49,21 @@
                 [self calLibertyAt:obj board:board];
             }
         }else{
-            self.free = YES;
+            self.liberty += 1;
         }
     }
+}
+
+
+#pragma mark - getter & setter
+-(BOOL)free{
+    return self.liberty > 0;
+}
+-(BOOL)needPin{
+    if(!self.needWarning) return NO;
+    NSInteger threshholder = (NSInteger)ceil(self.list.count * .2);
+    threshholder = MIN(3, threshholder);
+    return self.liberty <= threshholder;
 }
 
 

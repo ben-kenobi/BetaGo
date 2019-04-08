@@ -71,7 +71,7 @@
         if([self needReponseTo:p]){
             int x,y;
             [self convertP:p toX:&x y:&y];
-            BOOL b = [self.match canPlayAt:x y:y];
+            BOOL b = [self.match canPlayChess:btn.mod at:x y:y];
             if(b){
                 [self finalMoveChess:btn toX:x y:y];
                 return ;
@@ -90,12 +90,12 @@
 #pragma mark - interaction
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     //如果上一轮已经结束或者还没有上一轮，则新创建棋子
-    if(!self.curChess || self.curChess.done) {
+    if(!self.curChess || self.curChess.mod.done) {
         [self.match beginNextRound];
         self.curChess = [YFChessBtn btnWith:self.match.curChess w:gap dele:self];
     }
     BOOL animate = NO;
-    if(self.curChess && self.curChess.superview && !self.curChess.done){
+    if(self.curChess && self.curChess.superview && !self.curChess.mod.done){
         animate = YES;
     }
     CGPoint p = [touches.anyObject locationInView:self];
@@ -156,7 +156,7 @@
  */
 -(BOOL)moveCurChess:(CGPoint)p{
     //已经下定的当前子，无法移动
-    if(self.curChess.done)return NO;
+    if(self.curChess.mod.done)return NO;
     [self moveChess:self.curChess to:p];
     [self highlightLineAt:p];
     return YES;
@@ -226,7 +226,7 @@
     
     
     btn.showTitle=self.match.showRound;
-    btn.done = YES;
+    btn.userInteractionEnabled = YES;
     [self setHightLightedLines:nil color:0];
 }
 
@@ -247,7 +247,11 @@
 
 
 -(void)finalMoveChess:(YFChessBtn *)btn toX:(int)x y:(int)y{
-    [self.match move:btn.mod toX:x y:y];
+    [self.chessBtns removeObjectForKey:btn.mod];
+    NSArray<YFChessFragment *> *rmChessList = [self.match move:btn.mod toX:x y:y cal:YES];
+    [self.chessBtns setObject:btn forKey:btn.mod];
+    [self updateUIWithChessFragments:rmChessList];
+
     [UIUtil commonAnimationWithDuration:.15 cb:^{
         btn.cx = self.xLines[btn.mod.x].cx;
         btn.cy = self.yLines[btn.mod.y].cy;

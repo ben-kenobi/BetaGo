@@ -16,13 +16,14 @@
         self.board = [[YFChessBoard alloc]initWithLines:lines];
         
         //TODO TEST
-        for(int i=0;i<9;i++){
+        for(int i=0;i<0;i++){
             [self beginNextRound];
             [self canPlayThisRoundAt:i y:0];
             [self doneThisRound:NO];
         }
         self.showRound=YES;
         self.needConfirm=NO;
+        self.needWarning=YES;
     }return self;
 }
 
@@ -47,17 +48,15 @@
             break;
     }
     self.curChess.round = self.round;
+    self.curChess.board = self.board;
 }
 -(BOOL)canPlayThisRoundAt:(int)x y:(int)y{
-    x = MIN(MAX(0, x),self.board.numOfLines-1);
-    y = MIN(MAX(0, y),self.board.numOfLines-1);
-    return [self chess:self.curChess canPlayAtX:x y:y];
+    self.curChess.x = x; self.curChess.y =y;
+    return [self canPlayChess:self.curChess at:x y:y];
 }
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal{
-    [self.board addChess:self.curChess];
-    if(cal)
-        return [self calculateLibertyNrmDead];
-    return nil;
+    self.curChess.done = YES;
+    return [self move:self.curChess toX:self.curChess.x y:self.curChess.y cal:cal];
 }
 
 
@@ -65,10 +64,54 @@
     
 }
 
--(BOOL)chess:(YFChess *)chess canPlayAtX:(int)x y:(int)y{
-    chess.x = x;chess.y = y;
-    return [self.board canAdd:chess];
+
+
+            
+
+#pragma mark - move
+-(BOOL)canPlayChess:(YFChess *)chess at:(int)x y:(int)y{
+    x = MIN(MAX(0, x),self.board.numOfLines-1);
+    y = MIN(MAX(0, y),self.board.numOfLines-1);
+    
+    int ox = chess.x;
+    int oy = chess.y;
+    
+    if(![self.board canPlayAtX:x y:y]) return NO;
+    
+    
+    BOOL can = NO;
+    do{
+        NSArray<YFChessFragment *> * rmary = [self move:chess toX:x y:y cal:YES];
+        for(YFChessFragment *frag in rmary){
+            if(!frag.free){
+                can = YES;
+                break;
+            }
+        }
+        if(can) break;
+        
+        YFChessFragment *frag = [[YFChessFragment alloc]init];
+        frag.needWarning = self.needWarning;
+        [frag calLibertyAt:chess board:self.board];
+        can = frag.free;
+    }while (0);
+    if(chess.done)
+        [self move:chess toX:ox y:oy cal:NO];
+    else
+        [self.board rmChess:chess];
+    return can;
+    
 }
+-(NSArray<YFChessFragment *> *)move:(YFChess *)chess toX:(int)x y:(int)y cal:(BOOL)cal{
+    [self.board rmChess:chess];
+    chess.x = x;chess.y = y;
+    [self.board addChess:chess];
+    if(cal)
+        return [self calculateLibertyNrmDead:chess];
+    return nil;
+}
+
+
 
 
 #pragma mark - calculate
@@ -76,14 +119,14 @@
  计算当前落子是否会产生提子
  @return 返回需要提子的数组
  */
--(NSArray<YFChessFragment *> *)calculateLibertyNrmDead{
+-(NSArray<YFChessFragment *> *)calculateLibertyNrmDead:(YFChess *)ochess{
     NSMutableArray<YFChessFragment *> *mary = [NSMutableArray array];
-    NSArray<YFChess *> * sibChesses = [self.board findSiblingChessBy:self.curChess];
+    NSArray<YFChess *> * sibChesses = [self.board findSiblingChessBy:ochess];
     
     //迭代当前子四周的其他棋子，找出其他棋子的相连子，
     for(int i=0;i<sibChesses.count;i++){
         YFChess *chess = sibChesses[i];
-        if(chess.black == self.curChess.black) continue;//如果同色，则不计算
+        if(ochess.black == chess.black) continue;//如果同色，则不计算
         BOOL contain = NO;
         for(YFChessFragment *frag in mary){
             contain = [frag contain:chess];
@@ -94,24 +137,11 @@
         if(contain)continue;//如果已经计算过该子，则不在计算
         
         YFChessFragment *frag = [[YFChessFragment alloc]init];
+        frag.needWarning = self.needWarning;
         [frag calLibertyAt:chess board:self.board];
         [mary addObject:frag];
     }
     return mary;
 }
-            
-
-#pragma mark - move
--(BOOL)canPlayAt:(int)x y:(int)y{
-    x = MIN(MAX(0, x),self.board.numOfLines-1);
-    y = MIN(MAX(0, y),self.board.numOfLines-1);
-    return [self.board canPlayAtX:x y:y];
-}
--(void)move:(YFChess *)chess toX:(int)x y:(int)y{
-    [self.board rmChess:chess];
-    chess.x = x;chess.y = y;
-    [self.board addChess:chess];
-}
-
 
 @end

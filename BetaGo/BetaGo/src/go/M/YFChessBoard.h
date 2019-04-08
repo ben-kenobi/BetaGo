@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 增删改查
 -(YFChess *)findChessAt:(int)x y:(int)y;
+-(NSArray<YFChess *>*)findChessByRound:(int)round;
 -(NSArray<YFChess *> *)findSiblingChessBy:(YFChess *)chess;
 /**
  查找上下左右四周棋子，为空的位置返回 @0代替

@@ -59,6 +59,18 @@
     }
     return nil;
 }
+-(NSArray<YFChess *>*)findChessByRound:(int)round{
+    NSMutableArray *ary = [NSMutableArray array];
+    [self.chessList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:YFChess.class]){
+            YFChess * chess = obj;
+            if(chess.round == round){
+                [ary addObject:chess];
+            }
+        }
+    }];
+    return ary;
+}
 -(NSArray<YFChess *> *)findSiblingChessBy:(YFChess *)chess{
     NSMutableArray *mary = [NSMutableArray array];
     YFChess *left = [self findChessAt:chess.x-1 y:chess.y];
@@ -103,17 +115,28 @@
     return [self replaceChess:chess];
 }
 -(BOOL)rmChess:(YFChess *)chess{
+    if(![self.chessList containsObject:chess]) return YES;
     self.chessList[[self idxByx:chess.x y:chess.y]] = @0;
     return YES;
 }
 
 -(BOOL)replaceChess:(YFChess *)chess{
     self.chessList[[self idxByx:chess.x y:chess.y]] = chess;
+    chess.board = self;
     return YES;
 }
 
 -(int)idxByx:(int)x y:(int)y{
     return y*self.numOfLines + x;
+}
+-(void)setChessList:(NSMutableArray *)chessList{
+    _chessList = chessList;
+    [_chessList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:YFChess.class]){
+            YFChess *chess = (YFChess *)obj;
+            chess.board = self;
+        }
+    }];
 }
 
 @end

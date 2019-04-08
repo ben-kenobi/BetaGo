@@ -31,10 +31,6 @@
     _mod = mod;
     [self updateUI];
 }
--(void)setDone:(BOOL)done{
-    _done = done;
-    self.userInteractionEnabled = _done;
-}
 
 -(void)updateUI{
     [self setBackgroundImage:self.mod.bgimg forState:0];
@@ -47,7 +43,7 @@
 }
 +(instancetype)btnWith:(YFChess *)mod w:(CGFloat)wid dele:(id<YFChessLPActionDele>)dele {
     YFChessBtn *btn = [[self alloc]init];
-    btn.done = NO;
+    btn.userInteractionEnabled = NO;
     btn.mod=mod;
     btn.size = CGSizeMake(wid, wid);
 //    [UIUtil commonShadowWithRadius:2 size:CGSizeMake(1, 1) view:btn opacity:mod.black?.4:.2];
