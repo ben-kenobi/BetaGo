@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class YFChess,YFChessBoard,YFChessBtn;
+@class YFChess,YFChessBoard,YFChessBtn,YFPlayersView;
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 // 根据自身状态更新棋子
--(void)updateChessList:(NSDictionary<YFChess *,YFChessBtn *> *)dict;
+-(void)updateChessList:(NSDictionary<YFChess *,YFChessBtn *> *)dict playerView:(YFPlayersView *)playerView;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,23 +10,45 @@
 #import "YFChess.h"
 #import "YFChessBoard.h"
 #import "YFChessBtn.h"
+#import "YFPlayersView.h"
 
 @implementation YFChessFragment
 
 
 
 
--(void)updateChessList:(NSMutableDictionary<YFChess *,YFChessBtn *> *)dict{
+-(void)updateChessList:(NSMutableDictionary<YFChess *,YFChessBtn *> *)dict playerView:(YFPlayersView *)playerView{
+    NSMutableArray *rmedBtns = [NSMutableArray array];
     for(YFChess *chess in self.list){
         YFChessBtn *btn = dict[chess];
         if(!self.free){
+            // 将view从原控件移除后加入新父View做动画效果
+            UIView *view = [playerView playerViewBy:!chess.black];
+            
+            CGRect frame = [btn convertRect:btn.bounds toView:view];
+            
             [btn removeFromSuperview];
+            btn.frame = frame;
+            [view addSubview:btn];
+            [rmedBtns addObject:btn];
+            
             [dict removeObjectForKey:chess];
             [chess rmFromBoard];
         }else if([self needPin]){
             btn.pined = YES;
         }
     }
+    [UIUtil commonAnimationWithDuration:.25 cb:^{
+        for(UIView *view in rmedBtns){
+            view.center=view.superview.innerCenter;
+            view.alpha=.2;
+        }
+    } comp:^(BOOL finish) {
+        for(UIView *view in rmedBtns){
+            [view removeFromSuperview];
+        }
+    }];
+   
 }
 
 

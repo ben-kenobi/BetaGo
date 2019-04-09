@@ -24,6 +24,8 @@
         self.showRound=YES;
         self.needConfirm=NO;
         self.needWarning=YES;
+        self.canDelete=YES;
+        self.players = @[[YFPlayer playerWith:YES],[YFPlayer playerWith:NO]];
     }return self;
 }
 
@@ -55,18 +57,60 @@
     return [self canPlayChess:self.curChess at:x y:y];
 }
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal{
+    NSArray<YFChessFragment *> * rmary = [self move:self.curChess toX:self.curChess.x y:self.curChess.y cal:cal];
+    [self.curPlayer endRoundWith:rmary];
+    [self.nextPlayer beginRound];
     self.curChess.done = YES;
-    return [self move:self.curChess toX:self.curChess.x y:self.curChess.y cal:cal];
+    
+    return rmary;
 }
+
 
 
 -(void)prevRound{
     
 }
 
+-(void)setPause:(BOOL)pause{
+    _pause = pause;
+    //暂停时暂时结束当前用户
+    [self.curPlayer setPause:pause];
+}
 
-
-            
+-(NSInteger)curRound{
+    NSInteger round = self.round;
+    //当前已经下完，则算下一轮
+    if(self.curChess.done){
+        round += 1;
+    }
+    round = MAX(1, round);//还未开始也算第一轮
+    return round;
+}
+-(YFPlayer *)curPlayer{
+    switch (self.roundType) {
+        case RoundTypeNormal:
+            return self.players[(self.curRound-1)%self.players.count];
+        case RoundTypeBlack:
+            return self.players[0];
+        case RoundTypeWhite:
+            return self.players[1];
+    }
+    
+}
+-(YFPlayer *)nextPlayer{
+    switch (self.roundType) {
+        case RoundTypeNormal:
+             return self.players[(self.curRound)%self.players.count];
+        case RoundTypeBlack:
+            return self.players[0];
+        case RoundTypeWhite:
+            return self.players[1];
+    }
+}
+-(YFPlayer *)playerBy:(YFChess *)chess{
+    NSInteger idx = chess.black ? 0 : 1;
+    return self.players[idx];
+}
 
 #pragma mark - move
 -(BOOL)canPlayChess:(YFChess *)chess at:(int)x y:(int)y{
@@ -102,6 +146,13 @@
     return can;
     
 }
+
+-(NSArray<YFChessFragment *> *)confirmMove:(YFChess *)chess toX:(int)x y:(int)y{
+    NSArray<YFChessFragment *> *rmary = [self move:chess toX:x y:y cal:YES];
+    [[self playerBy:chess] getChess:rmary];
+    return rmary;
+}
+
 -(NSArray<YFChessFragment *> *)move:(YFChess *)chess toX:(int)x y:(int)y cal:(BOOL)cal{
     [self.board rmChess:chess];
     chess.x = x;chess.y = y;

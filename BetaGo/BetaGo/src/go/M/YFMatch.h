@@ -9,6 +9,8 @@
 
 #import "YFCodecObj.h"
 #import "YFChessBoard.h"
+#import "YFPlayer.h"
+
 @class YFChessFragment;
 
 
@@ -31,10 +33,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong)YFChessBoard *board;
 @property (nonatomic,assign)int round;//当前多少回合
 @property (nonatomic,strong)YFChess *curChess;
+
+@property (nonatomic,strong)NSArray<YFPlayer *> *players;
+
 @property (nonatomic,assign)BOOL needConfirm;//是否需要下子确认
 @property (nonatomic,assign)BOOL showRound;//是否需要在棋子上显示回合数
 @property (nonatomic,assign)BOOL canMove;//是否允许移动已经下好了的棋子
 @property (nonatomic,assign)BOOL needWarning;//是否需要被提预警
+@property (nonatomic,assign)BOOL canDelete;//是否可以双击移除棋子
+@property (nonatomic,assign)BOOL pause;//暂停
 -(instancetype)initMatchWith:(int)lines;
 
 

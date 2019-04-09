@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)onLpAction:(UILongPressGestureRecognizer *)gest;
 
+-(void)onDoubleTap:(UITapGestureRecognizer *)gest;
+
+
 @end
 
 @interface YFChessBtn : UIButton

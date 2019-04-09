@@ -38,6 +38,12 @@
 		B872AC9A2238D37F00C5A33B /* BCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7B2238D37E00C5A33B /* BCCoverView.m */; };
 		B872AC9B2238D37F00C5A33B /* BCMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7C2238D37E00C5A33B /* BCMenuCell.m */; };
 		B8D33863225B68890049F846 /* YFChessFragment.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33862225B68890049F846 /* YFChessFragment.m */; };
+		B8D33866225C61990049F846 /* YFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33865225C61990049F846 /* YFPlayerView.m */; };
+		B8D33869225C62490049F846 /* YFPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33868225C62490049F846 /* YFPlayer.m */; };
+		B8D3386D225C7AD10049F846 /* GoConst.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D3386C225C7AD10049F846 /* GoConst.m */; };
+		B8D33870225C95A60049F846 /* YFGoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D3386F225C95A50049F846 /* YFGoUtil.m */; };
+		B8D33873225CAFE00049F846 /* YFPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33872225CAFE00049F846 /* YFPlayersView.m */; };
+		B8D33875225CCB0F0049F846 /* main_bg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B8D33874225CCB0F0049F846 /* main_bg.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +105,17 @@
 		B872AC7D2238D37E00C5A33B /* BCUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUserInfoCell.h; sourceTree = "<group>"; };
 		B8D33861225B68890049F846 /* YFChessFragment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFChessFragment.h; sourceTree = "<group>"; };
 		B8D33862225B68890049F846 /* YFChessFragment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFChessFragment.m; sourceTree = "<group>"; };
+		B8D33864225C61990049F846 /* YFPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFPlayerView.h; sourceTree = "<group>"; };
+		B8D33865225C61990049F846 /* YFPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFPlayerView.m; sourceTree = "<group>"; };
+		B8D33867225C62490049F846 /* YFPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFPlayer.h; sourceTree = "<group>"; };
+		B8D33868225C62490049F846 /* YFPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFPlayer.m; sourceTree = "<group>"; };
+		B8D3386B225C7AD10049F846 /* GoConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoConst.h; sourceTree = "<group>"; };
+		B8D3386C225C7AD10049F846 /* GoConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoConst.m; sourceTree = "<group>"; };
+		B8D3386E225C95A50049F846 /* YFGoUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFGoUtil.h; sourceTree = "<group>"; };
+		B8D3386F225C95A50049F846 /* YFGoUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFGoUtil.m; sourceTree = "<group>"; };
+		B8D33871225CAFE00049F846 /* YFPlayersView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFPlayersView.h; sourceTree = "<group>"; };
+		B8D33872225CAFE00049F846 /* YFPlayersView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFPlayersView.m; sourceTree = "<group>"; };
+		B8D33874225CCB0F0049F846 /* main_bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = main_bg.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +220,7 @@
 		B872AC542238D37E00C5A33B /* go */ = {
 			isa = PBXGroup;
 			children = (
+				B8D3386A225C7AAF0049F846 /* O */,
 				B872AC552238D37E00C5A33B /* M */,
 				B872AC5C2238D37E00C5A33B /* C */,
 				B872AC5F2238D37E00C5A33B /* V */,
@@ -221,6 +239,8 @@
 				B872AC572238D37E00C5A33B /* YFMatch.m */,
 				B8D33861225B68890049F846 /* YFChessFragment.h */,
 				B8D33862225B68890049F846 /* YFChessFragment.m */,
+				B8D33867225C62490049F846 /* YFPlayer.h */,
+				B8D33868225C62490049F846 /* YFPlayer.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -241,6 +261,10 @@
 				B872AC632238D37E00C5A33B /* YFChessBtn.m */,
 				B872AC612238D37E00C5A33B /* YFChessBoradView.h */,
 				B872AC622238D37E00C5A33B /* YFChessBoradView.m */,
+				B8D33864225C61990049F846 /* YFPlayerView.h */,
+				B8D33865225C61990049F846 /* YFPlayerView.m */,
+				B8D33871225CAFE00049F846 /* YFPlayersView.h */,
+				B8D33872225CAFE00049F846 /* YFPlayersView.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -303,6 +327,18 @@
 				B872AC7D2238D37E00C5A33B /* BCUserInfoCell.h */,
 			);
 			path = V;
+			sourceTree = "<group>";
+		};
+		B8D3386A225C7AAF0049F846 /* O */ = {
+			isa = PBXGroup;
+			children = (
+				B8D33874225CCB0F0049F846 /* main_bg.jpeg */,
+				B8D3386B225C7AD10049F846 /* GoConst.h */,
+				B8D3386C225C7AD10049F846 /* GoConst.m */,
+				B8D3386E225C95A50049F846 /* YFGoUtil.h */,
+				B8D3386F225C95A50049F846 /* YFGoUtil.m */,
+			);
+			path = O;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +405,7 @@
 				B872AC862238D37F00C5A33B /* Main.storyboard in Resources */,
 				B872AC852238D37F00C5A33B /* LaunchScreen.storyboard in Resources */,
 				B872AC842238D37F00C5A33B /* cons.plist in Resources */,
+				B8D33875225CCB0F0049F846 /* main_bg.jpeg in Resources */,
 				B872AC7E2238D37F00C5A33B /* Assets.xcassets in Resources */,
 				B872AC8A2238D37F00C5A33B /* mystring.strings in Resources */,
 			);
@@ -438,8 +475,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8D33869225C62490049F846 /* YFPlayer.m in Sources */,
+				B8D33866225C61990049F846 /* YFPlayerView.m in Sources */,
 				B872AC872238D37F00C5A33B /* main.m in Sources */,
 				B872AC952238D37F00C5A33B /* YFNavVC.m in Sources */,
+				B8D33873225CAFE00049F846 /* YFPlayersView.m in Sources */,
+				B8D33870225C95A60049F846 /* YFGoUtil.m in Sources */,
 				B872AC982238D37F00C5A33B /* YFBasicVC.m in Sources */,
 				B872AC942238D37F00C5A33B /* BCLeftMenuVC.m in Sources */,
 				B872AC8C2238D37F00C5A33B /* YFChess.m in Sources */,
@@ -453,6 +494,7 @@
 				B872AC8D2238D37F00C5A33B /* YFChessBoard.m in Sources */,
 				B872AC972238D37F00C5A33B /* YFMainNav.m in Sources */,
 				B872AC932238D37F00C5A33B /* BCMenuList.m in Sources */,
+				B8D3386D225C7AD10049F846 /* GoConst.m in Sources */,
 				B872AC802238D37F00C5A33B /* H264VideoParser.m in Sources */,
 				B872AC902238D37F00C5A33B /* YFChessBtn.m in Sources */,
 				B872AC962238D37F00C5A33B /* YFMainVC2.m in Sources */,

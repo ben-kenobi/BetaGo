@@ -8,6 +8,7 @@
 
 #import "YFChessBoradView.h"
 #import "YFChessFragment.h"
+#import "YFPlayersView.h"
 
 @interface YFChessBoradView()<YFChessLPActionDele>
 {
@@ -26,6 +27,12 @@
 @end
 
 @implementation YFChessBoradView
+
+#pragma mark - actions
+-(void)statusChange{
+    [iNotiCenter postNotificationName:kMatchStatusChangeNoti object:0];
+}
+
 
 #pragma mark - datas
 -(void)setMod:(YFMatch *)match{
@@ -82,6 +89,13 @@
         [self abortMoveChess:btn];
     }
 }
+
+-(void)onDoubleTap:(UITapGestureRecognizer *)gest{
+    if(!self.match.canDelete) return;
+    YFChessBtn *btn = (YFChessBtn *)gest.view;
+    [self deleteChess:btn];
+}
+
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     return YES;
@@ -220,6 +234,7 @@
 }
 
 -(void)endAddChess:(YFChessBtn *)btn{
+    if(!btn) return;
     [self.chessBtns setObject:btn forKey:btn.mod];
     NSArray<YFChessFragment *> *rmChessList = [self.match doneThisRound:YES];
     [self updateUIWithChessFragments:rmChessList];
@@ -228,6 +243,7 @@
     btn.showTitle=self.match.showRound;
     btn.userInteractionEnabled = YES;
     [self setHightLightedLines:nil color:0];
+    [self statusChange];
 }
 
 -(void)updateUIWithChessFragments:(NSArray<YFChessFragment *> *)fragments{
@@ -235,7 +251,7 @@
         obj.pined = NO;
     }];
     for(YFChessFragment *frag in fragments){
-        [frag updateChessList:self.chessBtns];
+        [frag updateChessList:self.chessBtns playerView:self.playerView];
     }
 }
 
@@ -247,17 +263,19 @@
 
 
 -(void)finalMoveChess:(YFChessBtn *)btn toX:(int)x y:(int)y{
-    [self.chessBtns removeObjectForKey:btn.mod];
+    [self.chessBtns removeObjectForKey:btn.mod];//key的mod已经改变，需要先删除再添加
     NSArray<YFChessFragment *> *rmChessList = [self.match move:btn.mod toX:x y:y cal:YES];
     [self.chessBtns setObject:btn forKey:btn.mod];
     [self updateUIWithChessFragments:rmChessList];
-
+    
     [UIUtil commonAnimationWithDuration:.15 cb:^{
         btn.cx = self.xLines[btn.mod.x].cx;
         btn.cy = self.yLines[btn.mod.y].cy;
         btn.alpha = 1;
         btn.transform = CGAffineTransformIdentity;
     }];
+    
+    [self statusChange];
 }
 -(void)abortMoveChess:(YFChessBtn *)btn{
     [UIUtil commonAnimationWithDuration:.15 cb:^{
@@ -266,6 +284,13 @@
         btn.alpha = 1;
         btn.transform = CGAffineTransformIdentity;
     }];
+}
+
+-(void)deleteChess:(YFChessBtn *)btn{
+    YFChess *chess = btn.mod;
+    [btn removeFromSuperview];
+    [self.chessBtns removeObjectForKey:chess];
+    [chess rmFromBoard];
 }
 
 
@@ -313,7 +338,7 @@
 -(void)initLines{
     CGFloat lineW = 1;
     CGFloat lineW_2 = lineW*.5;
-
+    
     NSMutableArray *xlines = [NSMutableArray array];
     NSMutableArray *ylines = [NSMutableArray array];
     

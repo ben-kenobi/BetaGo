@@ -53,6 +53,12 @@
     lpgest.minimumPressDuration=.3;
     lpgest.delegate = dele;
     btn.lpGest = lpgest;
+    
+    UITapGestureRecognizer *tapgest = [[UITapGestureRecognizer alloc]initWithTarget:dele action:@selector(onDoubleTap:)];
+    tapgest.numberOfTapsRequired = 2;
+    [btn addGestureRecognizer:tapgest];
+    tapgest.delegate = dele;
+    
     return btn;
 }
 -(CGRect)imageRectForContentRect:(CGRect)contentRect{
