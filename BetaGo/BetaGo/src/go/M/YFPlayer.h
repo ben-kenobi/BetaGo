@@ -7,7 +7,7 @@
 //
 
 #import "YFCodecObj.h"
-@class YFChess,YFChessFragment;
+@class YFChess,YFChessFragment,YFMatch;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YFPlayer : YFCodecObj
@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)NSTimeInterval playDuration;//使用时间
 
 @property (nonatomic,assign)NSTimeInterval beginTime;
+
+@property (nonatomic,weak)YFMatch *match;
 
 
 

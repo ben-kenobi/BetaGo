@@ -8,14 +8,23 @@
 
 #import "YFPlayerView.h"
 #import "YFPlayer.h"
+#import "YFMatch.h"
 
 @interface YFPlayerView()
-@property (nonatomic,strong)UIImageView *icon;
 @property (nonatomic,strong)UILabel *titleLab;
 @property (nonatomic,strong)UILabel *detailLab;
 @end
 
 @implementation YFPlayerView
+
+#pragma mark - actions
+-(void)iconClicked{
+    if(self.dele)
+       [self.dele playerView:self iconClicked:self.icon];
+}
+
+
+#pragma mark - update
 
 -(void)setPlayer:(YFPlayer *)player{
     _player = player;
@@ -23,7 +32,9 @@
 }
 -(void)updateUI{
     self.layer.contents = (__bridge id)(self.player.bgImg.CGImage);
-    self.icon.image = self.player.iconImg;
+    [self.icon setImage:self.player.iconImg forState:0];
+    self.icon.layer.cornerRadius = self.player.iconImg.w *.5;
+    
     self.titleLab.text = self.player.title;
     self.detailLab.attributedText = self.player.attrDetail;
     self.titleLab.textColor = self.player.titleColor;
@@ -48,6 +59,32 @@
             make.top.equalTo(self.icon);
         }];
     }
+    
+    
+    // round status
+    switch (self.player.match.roundType) {
+        case RoundTypeNormal:{
+            self.icon.layer.borderColor = [UIColor clearColor].CGColor;
+            self.icon.layer.shadowOpacity = 0;
+            if(self.player.match.curPlayer.black == self.player.black){
+                [self.icon.layer addAnimation:YFGoUtil.playerPlayingAnimation forKey:@"ani"];
+            }else{
+                [self.icon.layer removeAllAnimations];
+            }
+        }break;
+        case RoundTypeBlack:
+        case RoundTypeWhite:{
+            [self.icon.layer removeAllAnimations];
+            if(self.player.match.curPlayer.black == self.player.black){
+                self.icon.layer.borderColor = iGlobalFocusColor.CGColor;
+                self.icon.layer.shadowOpacity = 1;
+            }else{
+                self.icon.layer.borderColor = [UIColor clearColor].CGColor;
+                self.icon.layer.shadowOpacity = 0;
+            }
+        }break;
+    }
+
 }
 
 #pragma mark - UI
@@ -62,7 +99,11 @@
 -(void)initUI{
     
     
-    self.icon = [[UIImageView alloc]init];
+    self.icon = [[UIButton alloc]init];
+    [self.icon addTarget:self action:@selector(iconClicked) forControlEvents:UIControlEventTouchUpInside];
+    [UIUtil commonShadowWithColor:iGlobalFocusColor Radius:5 size:CGSizeMake(0, 1) view:self.icon opacity:0];
+    self.icon.layer.borderWidth = dp2po(5);
+    
     self.titleLab = [IProUtil commonLab:iBFont(dp2po(16)) color:iColor(0x33, 0x33, 0x33, 1)];
     self.detailLab = [IProUtil commonLab:iBFont(dp2po(13)) color:iColor(0x88, 0x88, 0x88, 1)];
     self.detailLab.numberOfLines = 0;

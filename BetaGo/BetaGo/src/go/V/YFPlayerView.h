@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YFPlayer;
+@class YFPlayer,YFPlayerView;
+
+@protocol YFPlayerViewDelegate <NSObject>
+
+-(void)playerView:(YFPlayerView *)view iconClicked:(UIButton *)icon;
+
+@end
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YFPlayerView : UIView
 @property (nonatomic,strong)YFPlayer *player;
+@property (nonatomic,strong)UIButton *icon;
+@property (nonatomic,weak)id<YFPlayerViewDelegate> dele;
 -(void)updateUI;
 @end
 

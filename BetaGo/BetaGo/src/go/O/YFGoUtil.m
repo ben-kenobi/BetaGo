@@ -26,4 +26,31 @@
     }
     return mstr;
 }
++(void)feedbackWhenChessDone{
+        static UIImpactFeedbackGenerator *gen;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            gen = [[UIImpactFeedbackGenerator alloc]initWithStyle:(UIImpactFeedbackStyleMedium)];
+        });
+        [gen impactOccurred];
+}
+
++(CAAnimation *)playerPlayingAnimation{
+    CAAnimationGroup *grou = [[CAAnimationGroup alloc]init];
+    
+    CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+    ani.toValue =(__bridge id) [iGlobalFocusColor colorWithAlphaComponent:.8].CGColor;
+    ani.fromValue = (__bridge id)[iGlobalFocusColor colorWithAlphaComponent:.2].CGColor;
+    
+    CABasicAnimation *ani2 = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+    ani2.fromValue = @(.1);
+    ani2.toValue = @(1);
+    
+    grou.animations = @[ani,ani2];
+    grou.repeatCount = CGFLOAT_MAX;
+    grou.autoreverses = YES;
+    grou.duration=.6;
+    return grou;
+
+}
 @end

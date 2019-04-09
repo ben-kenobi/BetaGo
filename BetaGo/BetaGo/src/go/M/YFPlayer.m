@@ -22,7 +22,7 @@
 #pragma mark - UI properties
 -(UIImage *)iconImg{
     YFChess *chess = [YFChess chessWith:self.black];
-    return [chess.bgimg roundImg:dp2po(46) boderColor:iCommonSeparatorColor borderW:dp2po(3)];
+    return [chess.bgimg roundImg:dp2po(46) boderColor:iCommonSeparatorColor borderW:dp2po(.5)];
 }
 -(UIImage *)bgImg{
     return nil;
@@ -75,5 +75,25 @@
 -(NSTimeInterval)beginTime{
     if(_beginTime > 0) return _beginTime;
     return [[NSDate date] timeIntervalSince1970];
+}
+
+
+#pragma mark - overrided
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if(self = [super init]){
+        self.playCount = [coder decodeIntegerForKey:@"playCount"];
+        self.getCount = [coder decodeIntegerForKey:@"getCount"];
+        self.playDuration = [coder decodeDoubleForKey:@"playDuration"];
+        self.black = [coder decodeBoolForKey:@"black"];
+    }
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeInteger:self.playCount forKey:@"playCount"];
+    [coder encodeInteger:self.getCount forKey:@"getCount"];
+    [coder encodeDouble:self.playDuration forKey:@"playDuration"];
+    [coder encodeBool:self.black forKey:@"black"];
 }
 @end

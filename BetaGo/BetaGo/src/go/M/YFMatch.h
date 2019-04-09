@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)BOOL needWarning;//是否需要被提预警
 @property (nonatomic,assign)BOOL canDelete;//是否可以双击移除棋子
 @property (nonatomic,assign)BOOL pause;//暂停
+@property (nonatomic,assign)BOOL needFeedback;// 落子是否需要反馈
 -(instancetype)initMatchWith:(int)lines;
 
 
@@ -50,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)beginNextRound;
 -(BOOL)canPlayThisRoundAt:(int)x y:(int)y;
 
+-(void)updateRoundType:(RoundType)type;
 
 /**
 结束本轮，并且判断是否需要计算提子，如果计算，则返回被提的子数组
@@ -57,11 +59,13 @@ NS_ASSUME_NONNULL_BEGIN
  @return 被提子的数组,相连的子为一个YFChessFragment
  */
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal;
+
 -(void)prevRound;
+-(YFPlayer *)curPlayer;
 
 #pragma mark - move
 -(BOOL)canPlayChess:(YFChess *)chess at:(int)x y:(int)y;
--(NSArray<YFChessFragment *> *)move:(YFChess *)chess toX:(int)x y:(int)y cal:(BOOL)cal;
+-(NSArray<YFChessFragment *> *)confirmMove:(YFChess *)chess toX:(int)x y:(int)y;
 @end
 
 NS_ASSUME_NONNULL_END

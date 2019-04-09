@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YFGoUtil : NSObject
 +(NSString *)durationDesc:(NSInteger)millis;
++(void)feedbackWhenChessDone;
++(CAAnimation *)playerPlayingAnimation;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,7 @@
 #import "YFPlayerView.h"
 
 
-@interface YFPlayersView()
+@interface YFPlayersView()<YFPlayerViewDelegate>
 @property (nonatomic,copy)NSArray<YFPlayerView *> *playersView;
 @property (nonatomic,strong)YFMatch *match;
 @end
@@ -25,6 +25,14 @@
 -(UIView *)playerViewBy:(BOOL)black{
     return black ? self.playersView[0] : self.playersView[1];
 }
+
+#pragma mark - YFPlayerViewDelegate
+-(void)playerView:(YFPlayerView *)view iconClicked:(UIButton *)icon{
+    NSInteger idx = [self.playersView indexOfObject:view];
+    RoundType type = idx == 0 ? RoundTypeBlack : RoundTypeWhite;
+    [self.match updateRoundType:type];
+}
+
 #pragma mark - UI
 -(instancetype)initWithMatch:(YFMatch *)match{
     if(self = [super init]){
@@ -37,6 +45,7 @@
     YFPlayerView *lastview = nil;
     for(int i=0;i<self.match.players.count;i++){
         YFPlayerView *view = [[YFPlayerView alloc]init];
+        view.dele = self;
         view.player = self.match.players[i];
         [playersView addObject:view];
         [self addSubview:view];

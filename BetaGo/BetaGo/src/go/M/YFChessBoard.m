@@ -129,6 +129,9 @@
 -(int)idxByx:(int)x y:(int)y{
     return y*self.numOfLines + x;
 }
+
+
+#pragma mark - getter & setter
 -(void)setChessList:(NSMutableArray *)chessList{
     _chessList = chessList;
     [_chessList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

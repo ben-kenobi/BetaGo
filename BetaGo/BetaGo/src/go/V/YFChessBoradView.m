@@ -29,9 +29,7 @@
 @implementation YFChessBoradView
 
 #pragma mark - actions
--(void)statusChange{
-    [iNotiCenter postNotificationName:kMatchStatusChangeNoti object:0];
-}
+
 
 
 #pragma mark - datas
@@ -243,7 +241,6 @@
     btn.showTitle=self.match.showRound;
     btn.userInteractionEnabled = YES;
     [self setHightLightedLines:nil color:0];
-    [self statusChange];
 }
 
 -(void)updateUIWithChessFragments:(NSArray<YFChessFragment *> *)fragments{
@@ -264,7 +261,7 @@
 
 -(void)finalMoveChess:(YFChessBtn *)btn toX:(int)x y:(int)y{
     [self.chessBtns removeObjectForKey:btn.mod];//key的mod已经改变，需要先删除再添加
-    NSArray<YFChessFragment *> *rmChessList = [self.match move:btn.mod toX:x y:y cal:YES];
+    NSArray<YFChessFragment *> *rmChessList = [self.match confirmMove:btn.mod toX:x y:y];
     [self.chessBtns setObject:btn forKey:btn.mod];
     [self updateUIWithChessFragments:rmChessList];
     
@@ -275,7 +272,6 @@
         btn.transform = CGAffineTransformIdentity;
     }];
     
-    [self statusChange];
 }
 -(void)abortMoveChess:(YFChessBtn *)btn{
     [UIUtil commonAnimationWithDuration:.15 cb:^{

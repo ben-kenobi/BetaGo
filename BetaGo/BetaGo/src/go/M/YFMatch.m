@@ -25,21 +25,28 @@
         self.needConfirm=NO;
         self.needWarning=YES;
         self.canDelete=YES;
+        self.needFeedback=YES;
         self.players = @[[YFPlayer playerWith:YES],[YFPlayer playerWith:NO]];
     }return self;
 }
 
+
+#pragma mark - actions
 -(void)setShowRound:(BOOL)showRound{
     _showRound=showRound;
 }
 
 
+-(void)statusChange{
+    [iNotiCenter postNotificationName:kMatchStatusChangeNoti object:0];
+}
+
 
 #pragma mark - round
 -(void)beginNextRound{
+    self.round += 1;
     switch (self.roundType) {
         case RoundTypeNormal:
-            self.round += 1;
             self.curChess = [YFChess chessWith:self.round%2];
             break;
         case RoundTypeBlack:
@@ -61,10 +68,19 @@
     [self.curPlayer endRoundWith:rmary];
     [self.nextPlayer beginRound];
     self.curChess.done = YES;
-    
+    if(self.needFeedback){
+        [YFGoUtil feedbackWhenChessDone];
+    }
+    [self statusChange];
     return rmary;
 }
-
+-(void)updateRoundType:(RoundType)type{
+    if(self.roundType == type)
+        _roundType = RoundTypeNormal;
+    else
+        _roundType = type;
+    [self statusChange];
+}
 
 
 -(void)prevRound{
@@ -150,6 +166,7 @@
 -(NSArray<YFChessFragment *> *)confirmMove:(YFChess *)chess toX:(int)x y:(int)y{
     NSArray<YFChessFragment *> *rmary = [self move:chess toX:x y:y cal:YES];
     [[self playerBy:chess] getChess:rmary];
+    [self statusChange];
     return rmary;
 }
 
@@ -193,6 +210,14 @@
         [mary addObject:frag];
     }
     return mary;
+}
+
+#pragma mark - getter & setter
+-(void)setPlayers:(NSArray<YFPlayer *> *)players{
+    _players = players;
+    [_players enumerateObjectsUsingBlock:^(YFPlayer *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.match = self;
+    }];
 }
 
 @end
