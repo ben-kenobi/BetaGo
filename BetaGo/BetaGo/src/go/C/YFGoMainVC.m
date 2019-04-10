@@ -11,12 +11,14 @@
 #import "YFChessBoradView.h"
 #import "YFMatch.h"
 #import "YFPlayersView.h"
+#import "YFGoDashBoard.h"
 
-@interface YFGoMainVC ()
+@interface YFGoMainVC ()<YFGoDashBoardDele>
 @property (nonatomic,strong)YFChessBoradView *board;
 @property (nonatomic,strong)YFMatch *match;
 @property (nonatomic,strong)UIButton *doneBtn;
 @property (nonatomic,strong)YFPlayersView *playersView;
+@property (nonatomic,strong)YFGoDashBoard *dashBoard;
 @end
 
 @implementation YFGoMainVC
@@ -51,12 +53,25 @@
     self.match.pause = pause;
 }
 
-
+#pragma - mark YFGoDashBoardDele
+-(void)dashboard:(YFGoDashBoard *)dashboard startPuaseClick:(UIButton *)btn{
+    
+}
+-(void)dashboard:(YFGoDashBoard *)dashboard doneClick:(UIButton *)btn{
+    [self.board confirmAddChess];
+}
+-(void)dashboard:(YFGoDashBoard *)dashboard settingClick:(UIButton *)btn{
+    
+}
+-(void)dashboard:(YFGoDashBoard *)dashboard saveClick:(UIButton *)btn{
+    
+}
 
 #pragma mark - UI
 
 -(void)updateUI{
     [self.playersView updateUI];
+    [self.dashBoard updateUI];
 }
 
 
@@ -71,13 +86,15 @@
     self.playersView = [[YFPlayersView alloc]initWithMatch:self.match];
     self.board.playerView = self.playersView;
     
-    self.doneBtn = [IProUtil commonTextBtn:iFont(18) color:iGlobalFocusColor title:@"Done"];
-    [self.doneBtn addTarget:self.board action:@selector(confirmAddChess) forControlEvents:UIControlEventTouchUpInside];
+    self.dashBoard = [[YFGoDashBoard alloc]initWith:self.match];
+    self.dashBoard.dele=self;
+    
+   
     
     //layout --
     [self.view addSubview:self.board];
-    [self.view addSubview:self.doneBtn];
     [self.view addSubview:self.playersView];
+    [self.view addSubview:self.dashBoard];
     [self.board mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(@0);
         make.leading.trailing.equalTo(@0);
@@ -88,12 +105,13 @@
         make.top.leading.trailing.equalTo(@0);
         make.bottom.equalTo(self.board.mas_top);
     }];
-    
-    [self.doneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.board.mas_bottom).offset(dp2po(25));
-        make.centerX.equalTo(@0);
+    [self.dashBoard mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottomMargin);
+        make.leading.trailing.equalTo(@0);
+        make.top.equalTo(self.board.mas_bottom);
     }];
     
+   
     [self setPause:NO];
     
 }

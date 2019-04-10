@@ -27,12 +27,12 @@
     return mstr;
 }
 +(void)feedbackWhenChessDone{
-        static UIImpactFeedbackGenerator *gen;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            gen = [[UIImpactFeedbackGenerator alloc]initWithStyle:(UIImpactFeedbackStyleMedium)];
-        });
-        [gen impactOccurred];
+    static UIImpactFeedbackGenerator *gen;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        gen = [[UIImpactFeedbackGenerator alloc]initWithStyle:(UIImpactFeedbackStyleMedium)];
+    });
+    [gen impactOccurred];
 }
 
 +(CAAnimation *)playerPlayingAnimation{

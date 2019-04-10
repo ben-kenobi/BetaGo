@@ -11,7 +11,7 @@
 
 @protocol YFPlayerViewDelegate <NSObject>
 
--(void)playerView:(YFPlayerView *)view iconClicked:(UIButton *)icon;
+-(void)playerView:(YFPlayerView *_Nullable)view iconClicked:(UIButton *_Nullable)icon;
 
 @end
 NS_ASSUME_NONNULL_BEGIN

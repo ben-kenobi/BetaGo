@@ -44,6 +44,7 @@
 		B8D33870225C95A60049F846 /* YFGoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D3386F225C95A50049F846 /* YFGoUtil.m */; };
 		B8D33873225CAFE00049F846 /* YFPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33872225CAFE00049F846 /* YFPlayersView.m */; };
 		B8D33875225CCB0F0049F846 /* main_bg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B8D33874225CCB0F0049F846 /* main_bg.jpeg */; };
+		B8D33878225DA04B0049F846 /* YFGoDashBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33877225DA04B0049F846 /* YFGoDashBoard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,8 @@
 		B8D33871225CAFE00049F846 /* YFPlayersView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFPlayersView.h; sourceTree = "<group>"; };
 		B8D33872225CAFE00049F846 /* YFPlayersView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFPlayersView.m; sourceTree = "<group>"; };
 		B8D33874225CCB0F0049F846 /* main_bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = main_bg.jpeg; sourceTree = "<group>"; };
+		B8D33876225DA04B0049F846 /* YFGoDashBoard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFGoDashBoard.h; sourceTree = "<group>"; };
+		B8D33877225DA04B0049F846 /* YFGoDashBoard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFGoDashBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +268,8 @@
 				B8D33865225C61990049F846 /* YFPlayerView.m */,
 				B8D33871225CAFE00049F846 /* YFPlayersView.h */,
 				B8D33872225CAFE00049F846 /* YFPlayersView.m */,
+				B8D33876225DA04B0049F846 /* YFGoDashBoard.h */,
+				B8D33877225DA04B0049F846 /* YFGoDashBoard.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8D33878225DA04B0049F846 /* YFGoDashBoard.m in Sources */,
 				B8D33869225C62490049F846 /* YFPlayer.m in Sources */,
 				B8D33866225C61990049F846 /* YFPlayerView.m in Sources */,
 				B872AC872238D37F00C5A33B /* main.m in Sources */,
