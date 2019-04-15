@@ -96,6 +96,12 @@
 
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if([gestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
+        return self.match.canDelete;
+    }
+    if([gestureRecognizer isKindOfClass:UILongPressGestureRecognizer.class]){
+        return self.match.canMove;
+    }
     return YES;
 }
 

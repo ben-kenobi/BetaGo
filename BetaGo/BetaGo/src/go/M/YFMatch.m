@@ -14,19 +14,23 @@
 -(instancetype)initMatchWith:(int)lines{
     if(self = [super init]){
         self.board = [[YFChessBoard alloc]initWithLines:lines];
+        self.players = @[[YFPlayer playerWith:YES],[YFPlayer playerWith:NO]];
+        
         
         //TODO TEST
+        //test begin
         for(int i=0;i<0;i++){
             [self beginNextRound];
             [self canPlayThisRoundAt:i y:0];
             [self doneThisRound:NO];
         }
         self.showRound=YES;
-        self.needConfirm=NO;
+        self.needConfirm=YES;
         self.needWarning=YES;
         self.canDelete=YES;
         self.needFeedback=YES;
-        self.players = @[[YFPlayer playerWith:YES],[YFPlayer playerWith:NO]];
+        self.canMove = YES;
+      //test end
     }return self;
 }
 
@@ -58,6 +62,7 @@
     }
     self.curChess.round = self.round;
     self.curChess.board = self.board;
+    [self statusChange];
 }
 -(BOOL)canPlayThisRoundAt:(int)x y:(int)y{
     self.curChess.x = x; self.curChess.y =y;
@@ -91,6 +96,7 @@
     _pause = pause;
     //暂停时暂时结束当前用户
     [self.curPlayer setPause:pause];
+    [self statusChange];
 }
 
 -(NSInteger)curRound{

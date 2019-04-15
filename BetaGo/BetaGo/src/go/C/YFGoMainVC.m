@@ -12,6 +12,7 @@
 #import "YFMatch.h"
 #import "YFPlayersView.h"
 #import "YFGoDashBoard.h"
+#import "YFGoSettingVC.h"
 
 @interface YFGoMainVC ()<YFGoDashBoardDele>
 @property (nonatomic,strong)YFChessBoradView *board;
@@ -55,13 +56,15 @@
 
 #pragma - mark YFGoDashBoardDele
 -(void)dashboard:(YFGoDashBoard *)dashboard startPuaseClick:(UIButton *)btn{
-    
+    [self setPause: !self.match.pause];
 }
 -(void)dashboard:(YFGoDashBoard *)dashboard doneClick:(UIButton *)btn{
     [self.board confirmAddChess];
 }
 -(void)dashboard:(YFGoDashBoard *)dashboard settingClick:(UIButton *)btn{
-    
+    YFGoSettingVC *vc = [[YFGoSettingVC alloc]init];
+    vc.match = self.match;
+    [UIViewController.topVC presentViewController:vc animated:YES completion:0];
 }
 -(void)dashboard:(YFGoDashBoard *)dashboard saveClick:(UIButton *)btn{
     

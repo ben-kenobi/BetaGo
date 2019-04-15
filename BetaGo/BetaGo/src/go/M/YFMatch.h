@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)BOOL needFeedback;// 落子是否需要反馈
 -(instancetype)initMatchWith:(int)lines;
 
-
+-(void)statusChange;
 
 #pragma mark - round
 -(void)beginNextRound;

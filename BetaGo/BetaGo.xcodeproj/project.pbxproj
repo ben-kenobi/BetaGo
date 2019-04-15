@@ -37,6 +37,9 @@
 		B872AC992238D37F00C5A33B /* BCUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7A2238D37E00C5A33B /* BCUserInfoCell.m */; };
 		B872AC9A2238D37F00C5A33B /* BCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7B2238D37E00C5A33B /* BCCoverView.m */; };
 		B872AC9B2238D37F00C5A33B /* BCMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B872AC7C2238D37E00C5A33B /* BCMenuCell.m */; };
+		B882CEDE2264331000F00F0A /* M1BaseDialogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B882CEDD2264331000F00F0A /* M1BaseDialogVC.m */; };
+		B882CEE12264334000F00F0A /* YFGoSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B882CEDF2264334000F00F0A /* YFGoSettingVC.m */; };
+		B882CEE72264671700F00F0A /* YFMatchSettingVM.m in Sources */ = {isa = PBXBuildFile; fileRef = B882CEE62264671700F00F0A /* YFMatchSettingVM.m */; };
 		B8D33863225B68890049F846 /* YFChessFragment.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33862225B68890049F846 /* YFChessFragment.m */; };
 		B8D33866225C61990049F846 /* YFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33865225C61990049F846 /* YFPlayerView.m */; };
 		B8D33869225C62490049F846 /* YFPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D33868225C62490049F846 /* YFPlayer.m */; };
@@ -104,6 +107,12 @@
 		B872AC7B2238D37E00C5A33B /* BCCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCCoverView.m; sourceTree = "<group>"; };
 		B872AC7C2238D37E00C5A33B /* BCMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCMenuCell.m; sourceTree = "<group>"; };
 		B872AC7D2238D37E00C5A33B /* BCUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUserInfoCell.h; sourceTree = "<group>"; };
+		B882CEDC2264330F00F00F0A /* M1BaseDialogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M1BaseDialogVC.h; sourceTree = "<group>"; };
+		B882CEDD2264331000F00F0A /* M1BaseDialogVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M1BaseDialogVC.m; sourceTree = "<group>"; };
+		B882CEDF2264334000F00F0A /* YFGoSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFGoSettingVC.m; sourceTree = "<group>"; };
+		B882CEE02264334000F00F0A /* YFGoSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFGoSettingVC.h; sourceTree = "<group>"; };
+		B882CEE52264671700F00F0A /* YFMatchSettingVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFMatchSettingVM.h; sourceTree = "<group>"; };
+		B882CEE62264671700F00F0A /* YFMatchSettingVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFMatchSettingVM.m; sourceTree = "<group>"; };
 		B8D33861225B68890049F846 /* YFChessFragment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFChessFragment.h; sourceTree = "<group>"; };
 		B8D33862225B68890049F846 /* YFChessFragment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFChessFragment.m; sourceTree = "<group>"; };
 		B8D33864225C61990049F846 /* YFPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFPlayerView.h; sourceTree = "<group>"; };
@@ -244,6 +253,8 @@
 				B8D33862225B68890049F846 /* YFChessFragment.m */,
 				B8D33867225C62490049F846 /* YFPlayer.h */,
 				B8D33868225C62490049F846 /* YFPlayer.m */,
+				B882CEE52264671700F00F0A /* YFMatchSettingVM.h */,
+				B882CEE62264671700F00F0A /* YFMatchSettingVM.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -253,6 +264,8 @@
 			children = (
 				B872AC5D2238D37E00C5A33B /* YFGoMainVC.h */,
 				B872AC5E2238D37E00C5A33B /* YFGoMainVC.m */,
+				B882CEE02264334000F00F0A /* YFGoSettingVC.h */,
+				B882CEDF2264334000F00F0A /* YFGoSettingVC.m */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -317,6 +330,8 @@
 				B872AC742238D37E00C5A33B /* BCLeftMenuVC.h */,
 				B872AC752238D37E00C5A33B /* YFMainVC2.h */,
 				B872AC762238D37E00C5A33B /* YFBasicVC.m */,
+				B882CEDC2264330F00F00F0A /* M1BaseDialogVC.h */,
+				B882CEDD2264331000F00F0A /* M1BaseDialogVC.m */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -481,9 +496,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8D33878225DA04B0049F846 /* YFGoDashBoard.m in Sources */,
+				B882CEDE2264331000F00F0A /* M1BaseDialogVC.m in Sources */,
 				B8D33869225C62490049F846 /* YFPlayer.m in Sources */,
 				B8D33866225C61990049F846 /* YFPlayerView.m in Sources */,
 				B872AC872238D37F00C5A33B /* main.m in Sources */,
+				B882CEE72264671700F00F0A /* YFMatchSettingVM.m in Sources */,
 				B872AC952238D37F00C5A33B /* YFNavVC.m in Sources */,
 				B8D33873225CAFE00049F846 /* YFPlayersView.m in Sources */,
 				B8D33870225C95A60049F846 /* YFGoUtil.m in Sources */,
@@ -493,6 +510,7 @@
 				B872AC8E2238D37F00C5A33B /* YFGoMainVC.m in Sources */,
 				B872AC8F2238D37F00C5A33B /* YFChessBoradView.m in Sources */,
 				B872AC9B2238D37F00C5A33B /* BCMenuCell.m in Sources */,
+				B882CEE12264334000F00F0A /* YFGoSettingVC.m in Sources */,
 				B8D33863225B68890049F846 /* YFChessFragment.m in Sources */,
 				B872AC9A2238D37F00C5A33B /* BCCoverView.m in Sources */,
 				B872AC832238D37F00C5A33B /* BCBaseHttpClient.m in Sources */,
