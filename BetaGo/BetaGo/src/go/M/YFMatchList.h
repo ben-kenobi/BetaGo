@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)rmMatch:(YFMatch *)match;
 -(void)rmAt:(NSIndexPath *)indexpath;
 -(void)saveMatch:(YFMatch *)match;
-
+-(void)save;
 -(void)selectMatchAt:(NSIndexPath *)idxpath;
 
 @end

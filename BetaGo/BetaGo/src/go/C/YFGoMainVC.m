@@ -140,6 +140,8 @@
 #pragma mark - UI
 
 -(void)updateUI{
+    self.title = self.match ? self.match.title : @"Go";
+
     [self.playersView updateUI];
     [self.dashBoard updateUI];
     [self.board updateUI];

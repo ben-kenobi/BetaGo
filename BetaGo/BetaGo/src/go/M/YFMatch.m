@@ -227,11 +227,13 @@
 #pragma mark - UI functions
 -(NSAttributedString *)detailAttrDesc{
     NSMutableAttributedString *mastr = [[NSMutableAttributedString alloc]init];
-    [mastr appendAttributedString:[[NSAttributedString alloc]initWithString:iFormatStr(@"%@\n",self.remark)]];
-    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.createTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1)}]];
-    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"创建\n" attributes:@{NSForegroundColorAttributeName:iColor(0x88, 0x88, 0x88, 1)}]];
-    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.lastSavedTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1)}]];
-    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"保存" attributes:@{NSForegroundColorAttributeName:iColor(0x99, 0x88, 0x88, 1)}]];
+    if(!emptyStr(self.remark))
+        [mastr appendAttributedString:[[NSAttributedString alloc]initWithString:iFormatStr(@"%@\n",self.remark)]];
+    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:@"\n" attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1),NSFontAttributeName:iFont(5)}]];
+    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.createTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1),NSFontAttributeName:iFont(10)}]];
+    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"创建\n" attributes:@{NSForegroundColorAttributeName:iColor(0x88, 0x88, 0x88, 1),NSFontAttributeName:iFont(10)}]];
+    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.lastSavedTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1),NSFontAttributeName:iFont(10)}]];
+    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"保存" attributes:@{NSForegroundColorAttributeName:iColor(0x88, 0x88, 0x88, 1),NSFontAttributeName:iFont(10)}]];
     return [[NSAttributedString alloc] initWithAttributedString:mastr];
 }
 

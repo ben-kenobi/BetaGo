@@ -10,6 +10,8 @@
 #import "YFMatchListVC.h"
 #import "YFMatchList.h"
 #import "YFMatchListCell.h"
+#import "YFMatchInfoVC.h"
+
 NSString *celliden = @"celliden";
 
 @interface YFMatchListVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -24,7 +26,10 @@ NSString *celliden = @"celliden";
     [self initUI];
     self.vm = YFMatchList.shared;
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tv reloadData];
+}
 
 #pragma mark - UITableviewDelegate
 
@@ -43,7 +48,9 @@ NSString *celliden = @"celliden";
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-    
+    YFMatchInfoVC *vc = [[YFMatchInfoVC alloc]init];
+    vc.match = [self.vm getBy:indexPath];
+    [UIViewController pushVC:vc];
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.vm rmAt:indexPath];

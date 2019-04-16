@@ -13,7 +13,7 @@
 #import "BCCustTextView.h"
 #import "BCCustTf.h"
 #import "YFMatchInfoCell.h"
-
+#import "YFMatchList.h"
 
 static NSString *celliden2=@"celliden2";
 @interface YFMatchInfoVC ()
@@ -54,69 +54,12 @@ static NSString *celliden2=@"celliden2";
 #pragma mark - actions
 -(void)save:(id)sender{
     [self.view endEditing:YES];
-    if([self isNameExists]){
-        [iPop toastWarn:NSLocalizedString(@"bc.mode.mode_name_exists", 0)];
-        return ;
-    }
-    if(self.mode){
-        self.tmpMode = self.mode;
-        self.tmpMode.iconType = self.modeListV.selMode.iconType;
-        self.tmpMode.title = self.nametf.text;
-        self.tmpMode.detail = self.countTv.textView.text;
-        [self.mod.modeVM updateMode:self.tmpMode];
-        
-        
-        [iPop showProg];
-        
-        [BCComCtrlManager.shared setCustMode:[self.mod.modeVM uploadParam:self.mode.mode operType:SceneOperationTypeUpdate] task:[BCComCtrlTask taskWith:self.mod.connectDID sn:self.mod.station_sn chl:0 cb:^(TASK_RESULT_CODE code, NSString *msg, id datas) {
-            [iPop dismProg];
-            if(code == TASK_SUCESS){
-                [UIViewController popVC];
-                [self.mod.modeVM commitChange];
-            }else{
-                [iPop toastWarn:msg];
-            }
-        }]];
-        return;
-    }
-    BCModeMod *mode = [[BCModeMod alloc]init];
-    mode.iconType = self.modeListV.selMode.iconType;
-    mode.title = self.nametf.text;
-    mode.detail = self.countTv.textView.text;
-    
-    [self.mod.modeVM addMode:mode];
-    
-    [self.mod resetDevicesActionsOnMode:mode.mode];
-    
-    [iPop showProg];
-    [BCComCtrlManager.shared setCustMode:[self.mod.modeVM uploadParam:mode.mode operType:SceneOperationTypeAdd] task:[BCComCtrlTask taskWith:self.mod.connectDID sn:self.mod.station_sn chl:0 cb:^(TASK_RESULT_CODE code, NSString *msg, id datas) {
-        [iPop dismProg];
-        if(code == TASK_SUCESS){
-            BCSecuritySettingsVC2 *vc = [[BCSecuritySettingsVC2 alloc]init];
-            vc.mod=self.mod;
-            vc.mode=mode;
-            vc.fromAdd = YES;
-            UINavigationController *nav = self.navigationController;
-            [self.navigationController popViewControllerAnimated:NO];
-            runOnMain(^{
-                [nav pushViewController:vc animated:YES];
-            });
-            [self.mod.modeVM commitChange];
-        }else{
-            [iPop toastWarn:msg];
-        }
-    }]];
+    self.match.remark = self.countTv.textView.text;
+    self.match.title = self.nametf.text;
+    [YFMatchList.shared save];
+    [UIViewController popVC];
 }
--(BOOL)isNameExists{
-    NSString *title = self.nametf.text;
-    for(NSInteger i = 0; i<self.mod.modeVM.count; i++){
-        BCModeMod *m = [self.mod.modeVM get:i];
-        if(m != self.mode && [m.title isEqualToString:title]){
-            return YES;
-        }
-    }
-    return NO;
-}
+
 
 -(void)onKeyboardChange:(NSNotification *)noti{
     CGFloat dura=[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
@@ -132,7 +75,7 @@ static NSString *celliden2=@"celliden2";
         [self.view layoutIfNeeded];
     }];
     if(self.countTv.textView.isFirstResponder){
-        [self.tv scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
+        [self.tv scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
     }
 }
 #pragma mark - UITableviewDelegate
@@ -149,13 +92,6 @@ static NSString *celliden2=@"celliden2";
             make.width.equalTo(cell);
         }];
     }else if(sec == 1){
-        [self.modeListV removeFromSuperview];
-        [cell.contentView addSubview:self.modeListV];
-        [self.modeListV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.leading.bottom.equalTo(@0);
-            make.width.equalTo(cell);
-        }];
-    }else if(sec == 2){
         [self.countTv removeFromSuperview];
         [cell.contentView addSubview:self.countTv];
         [self.countTv mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,8 +107,6 @@ static NSString *celliden2=@"celliden2";
     if(sec == 0){
         return dp2po(52);
     }else if(sec == 1){
-        return 200;
-    }else if(sec == 2){
         return dp2po(110);
     }
     return 0;
@@ -182,16 +116,13 @@ static NSString *celliden2=@"celliden2";
 }
 #pragma mark - UI
 -(void)initUI{
-    [self.tv registerClass:BCSecuritySettingDeviceCell.class forCellReuseIdentifier:celliden2];
+    [self.tv registerClass:YFMatchInfoCell.class forCellReuseIdentifier:celliden2];
     self.tv.tableHeaderView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, iScreenW, CGFLOAT_MIN)];
     self.tv.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, iScreenW, CGFLOAT_MIN)];
     self.tv.bounces=YES;
-    if(self.mode)
-        self.title = NSLocalizedString(@"bc.mode.edit_security",0);
-    else
-        self.title = NSLocalizedString(@"bc.mode.create_security",0);
+    self.title = @"备注";
     
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:self.mode ? NSLocalizedString(@"bc.common.save",0) : NSLocalizedString(@"bc.common.next",0) style:(UIBarButtonItemStylePlain) target:self action:@selector(save:)];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(save:)];
     self.navigationItem.rightBarButtonItem.tintColor = iGlobalFocusColor;
     self.navigationItem.rightBarButtonItem.enabled=NO;
 }
@@ -200,7 +131,7 @@ static NSString *celliden2=@"celliden2";
 -(BCCustTf *)nametf{
     if(_nametf)return _nametf;
     BCCustTf * (^createTf)(void)= ^BCCustTf * {
-        BCCustTf *tf = [[BCNamingTF alloc]init];
+        BCCustTf *tf = [[BCCustTf alloc]init];
         tf.leftPad=dp2po(15);
         tf.rightPad=tf.leftPad;
         tf.bottomLine.hidden=YES;
@@ -229,27 +160,8 @@ static NSString *celliden2=@"celliden2";
     // content Sv ---begin
     
     _countTv=[[BCCountTextView alloc]init];
-    _countTv.maxCharacters = 60;
-    _countTv.textView.placeholder = NSLocalizedString(@"bc.mode.custom_security", 0);
+    _countTv.maxCharacters = 600;
+    _countTv.textView.placeholder = @"";
     return _countTv;
-}
--(BCModeListView *)modeListV{
-    if(_modeListV)return _modeListV;
-    _modeListV = [[BCModeListView alloc]init];
-    @weakRef(self)
-    [_modeListV setOnSelChange:^{
-        [weak_self updateUI];
-    }];
-    return _modeListV;
-}
-
--(BCGatewaryMod *)mod{
-    BCGatewaryMod *mod =  [BCDevicesInstance.shared.bases getBySN:_mod.station_sn];
-    if(mod){
-        _mod=mod;
-        if(_mode)
-            _mode = [_mod.modeVM getBy:_mode.mode];
-    }
-    return _mod;
 }
 @end
