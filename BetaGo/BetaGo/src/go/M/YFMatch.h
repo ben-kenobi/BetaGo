@@ -29,10 +29,17 @@ typedef NS_ENUM(NSUInteger, RoundStatus) {
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YFMatch : YFCodecObj
+@property (nonatomic,strong)NSString *ID;
+
 @property (nonatomic,assign)RoundType roundType;
 @property (nonatomic,strong)YFChessBoard *board;
 @property (nonatomic,assign)int round;//当前多少回合
 @property (nonatomic,strong)YFChess *curChess;
+
+@property (nonatomic,strong)NSString *title;
+@property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSDate *createTime;
+@property (nonatomic,strong)NSDate *lastSavedTime;
 
 @property (nonatomic,strong)NSArray<YFPlayer *> *players;
 
@@ -66,6 +73,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - move
 -(BOOL)canPlayChess:(YFChess *)chess at:(int)x y:(int)y;
 -(NSArray<YFChessFragment *> *)confirmMove:(YFChess *)chess toX:(int)x y:(int)y;
+
+
+
+#pragma mark - UI functions
+-(NSAttributedString *)detailAttrDesc;
+-(NSAttributedString *)titleAttrDesc;
 @end
 
 NS_ASSUME_NONNULL_END

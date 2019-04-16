@@ -21,6 +21,7 @@
 @property (nonatomic,weak)YFPlayersView *playerView;;
 
 -(void)confirmAddChess;
+-(void)updateUI;
 @end
 
 

@@ -51,7 +51,7 @@
     bar.tintColor = iColor(0x44, 0x44, 0x44, 1);
     bar.translucent=NO;
     
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : iColor(0x11, 0x11, 0x11, 1),NSFontAttributeName:iFont(18)}];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : iColor(0x11, 0x11, 0x11, 1),NSFontAttributeName:iFont(16)}];
 }
 
 

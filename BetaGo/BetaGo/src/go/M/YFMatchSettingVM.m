@@ -18,7 +18,9 @@
             [YFMatchSwitchSettingMod modWith:@"显示回合" on:match.showRound],
             [YFMatchSwitchSettingMod modWith:@"长按移动" on:match.canMove],
             [YFMatchSwitchSettingMod modWith:@"双击删除" on:match.canDelete],
-             [YFMatchSwitchSettingMod modWith:@"气紧预警" on:match.needWarning]
+             [YFMatchSwitchSettingMod modWith:@"气紧预警" on:match.needWarning],
+            [YFMatchSwitchSettingMod modWith:@"落子反馈" on:match.needFeedback]
+
         ];
     }return self;
 }
@@ -39,6 +41,7 @@
     self.match.canMove = self.datas[2].on;
     self.match.canDelete = self.datas[3].on;
     self.match.needWarning = self.datas[4].on;
+    self.match.needFeedback = self.datas[5].on;
     [self.match statusChange];
 }
 @end

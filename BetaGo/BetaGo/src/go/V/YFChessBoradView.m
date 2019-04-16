@@ -296,22 +296,10 @@
 }
 
 
-#pragma mark - observer
--(void)dealloc{
-    [self.match removeObserver:self forKeyPath:@"showRound"];
-}
--(void)addObservers{
-    [self.match addObserver:self forKeyPath:@"showRound" options:0 context:0];
-}
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    if([keyPath isEqualToString:@"showRound"]){
-        [self refreshUI];
-    }
-}
+
 
 #pragma mark - UI
-
--(void)refreshUI{
+-(void)updateUI{
     [self.chessBtns.allValues enumerateObjectsUsingBlock:^(YFChessBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.showTitle = self.match.showRound;
     }];
@@ -363,12 +351,13 @@
     
     int midLoc = self.mod.numOfLines * .5;
     int submidLoc = midLoc * .5;
-    [self addView:self.dotView atX:midLoc y:midLoc];
-    [self addView:self.dotView atX:submidLoc y:submidLoc];
-    [self addView:self.dotView atX:self.mod.numOfLines - submidLoc-1 y:submidLoc];
-    [self addView:self.dotView atX:submidLoc y:self.mod.numOfLines - submidLoc-1];
-    [self addView:self.dotView atX:self.mod.numOfLines - submidLoc-1 y:self.mod.numOfLines - submidLoc-1];
-    
+    if(midLoc > 0){
+        [self addView:self.dotView atX:midLoc y:midLoc];
+        [self addView:self.dotView atX:submidLoc y:submidLoc];
+        [self addView:self.dotView atX:self.mod.numOfLines - submidLoc-1 y:submidLoc];
+        [self addView:self.dotView atX:submidLoc y:self.mod.numOfLines - submidLoc-1];
+        [self addView:self.dotView atX:self.mod.numOfLines - submidLoc-1 y:self.mod.numOfLines - submidLoc-1];
+    }
 }
 
 

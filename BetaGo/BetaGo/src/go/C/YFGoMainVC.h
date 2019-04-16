@@ -6,11 +6,11 @@
 //  Copyright © 2019 yf. All rights reserved.
 //
 
-#import "YFBasicVC.h"
+#import "BCCommonNoContentVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YFGoMainVC : YFBasicVC
+@interface YFGoMainVC : BCCommonNoContentVC
 
 @end
 

@@ -13,9 +13,13 @@
 @implementation YFMatch
 -(instancetype)initMatchWith:(int)lines{
     if(self = [super init]){
+        self.ID = [NSUUID UUID].UUIDString;
+        self.createTime = [NSDate date];
+        self.lastSavedTime = [NSDate date];
+        self.remark = @"";
+        self.title = self.ID;
         self.board = [[YFChessBoard alloc]initWithLines:lines];
         self.players = @[[YFPlayer playerWith:YES],[YFPlayer playerWith:NO]];
-        
         
         //TODO TEST
         //test begin
@@ -217,6 +221,24 @@
     }
     return mary;
 }
+
+
+
+#pragma mark - UI functions
+-(NSAttributedString *)detailAttrDesc{
+    NSMutableAttributedString *mastr = [[NSMutableAttributedString alloc]init];
+    [mastr appendAttributedString:[[NSAttributedString alloc]initWithString:iFormatStr(@"%@\n",self.remark)]];
+    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.createTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1)}]];
+    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"创建\n" attributes:@{NSForegroundColorAttributeName:iColor(0x88, 0x88, 0x88, 1)}]];
+    [mastr appendAttributedString: [[NSAttributedString alloc]initWithString:self.lastSavedTime.timeFormat2 attributes:@{NSForegroundColorAttributeName:iColor(0xaa, 0xaa, 0xaa, 1)}]];
+    [mastr appendAttributedString:[[NSAttributedString alloc] initWithString:@"保存" attributes:@{NSForegroundColorAttributeName:iColor(0x99, 0x88, 0x88, 1)}]];
+    return [[NSAttributedString alloc] initWithAttributedString:mastr];
+}
+
+-(NSAttributedString *)titleAttrDesc{
+    return [[NSAttributedString alloc]initWithString:iFormatStr(@"(%d路)%@",self.board.numOfLines,self.title)];
+}
+
 
 #pragma mark - getter & setter
 -(void)setPlayers:(NSArray<YFPlayer *> *)players{

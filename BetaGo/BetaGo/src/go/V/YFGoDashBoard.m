@@ -28,6 +28,7 @@
 -(void)updateUI{
     self.pauseBtn.selected = self.match.pause;
     self.doneBtn.enabled = self.match.curChess && !self.match.curChess.done;
+    self.saveBtn.enabled = YES;
 }
 
 #pragma mark - actions
@@ -56,6 +57,7 @@
     
     
     self.saveBtn = [IProUtil commonTextBtn:iFont(dp2po(16)) color:iColor(0x33, 0x33, 0x33, 1) title:@"保存"];
+    [self.saveBtn setTitleColor:iColor(0xdd, 0xdd, 0xdd, 1) forState:UIControlStateDisabled];
     [UIUtil commonStrokeBtn:self.saveBtn tar:self action:@selector(onClick:)];
     self.saveBtn.contentEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
     
