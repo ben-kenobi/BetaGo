@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YFMatchList : NSObject
-+(instancetype)shared;
++(instancetype)newInstance;
 
 #pragma mark - exported
 -(NSInteger)count;

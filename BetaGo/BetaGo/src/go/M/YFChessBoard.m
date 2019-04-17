@@ -141,5 +141,11 @@
         }
     }];
 }
-
+-(void)setValue:(id)value forKey:(NSString *)key{
+    if([key isEqualToString:@"_chessList"]){
+        [self setChessList:value];
+    }else{
+        [super setValue:value forKey:key];
+    }
+}
 @end

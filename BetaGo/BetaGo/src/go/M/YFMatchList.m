@@ -13,8 +13,6 @@
 #import "YFMatch.h"
 
 
-static dispatch_once_t onceToken;
-static YFMatchList *instance = nil;
 @interface YFMatchList ()
 @property (nonatomic,strong)NSMutableArray<YFMatch *> *matchs;
 @property (nonatomic,strong)NSString *selectedMatchID;
@@ -57,6 +55,7 @@ static YFMatchList *instance = nil;
     match.lastSavedTime = [NSDate date];
     self.selectedMatchID = match.ID;
     if([self.matchs containsObject:match]){
+        [self.matchs replaceObjectAtIndex:[self.matchs indexOfObject:match] withObject:match];
         [self save];
     }else{
         [self addMatch:match];
@@ -71,10 +70,8 @@ static YFMatchList *instance = nil;
 #pragma mark - init
 
 
-+(instancetype)shared{
-    dispatch_once(&onceToken, ^{
-        instance=[YFMatchList unArchive];
-    });
++(instancetype)newInstance{
+    YFMatchList *instance=[YFMatchList unArchive];
     return instance;
 }
 

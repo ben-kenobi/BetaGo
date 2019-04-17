@@ -17,6 +17,10 @@
 @end
 
 @implementation YFChess
+
+-(void)setDone:(BOOL)done{
+    _done = done;
+}
 +(instancetype)chessWith:(BOOL)black{
     YFChess *chess = [[self alloc]init];
     chess.black = black;

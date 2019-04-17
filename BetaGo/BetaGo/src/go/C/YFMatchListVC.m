@@ -11,6 +11,7 @@
 #import "YFMatchList.h"
 #import "YFMatchListCell.h"
 #import "YFMatchInfoVC.h"
+#import "YFMatch.h"
 
 NSString *celliden = @"celliden";
 
@@ -24,7 +25,7 @@ NSString *celliden = @"celliden";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    self.vm = YFMatchList.shared;
+    self.vm = YFMatchList.newInstance;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -43,6 +44,7 @@ NSString *celliden = @"celliden";
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [UIViewController popVC];
+    [self.vm selectMatchAt:indexPath];
     if(self.selectedCB)
         self.selectedCB([self.vm getBy:indexPath]);
 }
@@ -50,6 +52,7 @@ NSString *celliden = @"celliden";
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     YFMatchInfoVC *vc = [[YFMatchInfoVC alloc]init];
     vc.match = [self.vm getBy:indexPath];
+    vc.vm=self.vm;
     [UIViewController pushVC:vc];
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -250,4 +250,17 @@
     }];
 }
 
+-(void)setValue:(id)value forKey:(NSString *)key{
+    if([key isEqualToString:@"_players"]){
+        [self setPlayers:value];
+    }else{
+        [super setValue:value forKey:key];
+    }
+}
+-(BOOL)isEqual:(id)object{
+    if(!object) return NO;
+    if(![object isKindOfClass:YFMatch.class]) return NO;
+    YFMatch *other = object;
+    return [other.ID isEqual:self.ID];
+}
 @end

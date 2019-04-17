@@ -56,7 +56,7 @@ static NSString *celliden2=@"celliden2";
     [self.view endEditing:YES];
     self.match.remark = self.countTv.textView.text;
     self.match.title = self.nametf.text;
-    [YFMatchList.shared save];
+    [self.vm save];
     [UIViewController popVC];
 }
 

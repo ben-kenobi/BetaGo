@@ -306,6 +306,8 @@
 }
 
 -(void)initChesses{
+  
+    
     int count = 0;
     for(int y=0;y<self.mod.numOfLines;y++){
         for(int x=0;x<self.mod.numOfLines;x++){
@@ -313,8 +315,8 @@
             if(chess){
                 count+=1;
                 YFChessBtn *btn = [YFChessBtn btnWith:chess w:gap dele:self];
-                if(self.curChess.mod.round < chess.round)
-                    self.curChess = btn;
+//                if(self.match.curChess && chess.round == self.match.curChess.round)
+//                    self.curChess = btn;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(count*.06 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
                     [self beginAddChess:btn at:CGPointZero];
@@ -323,6 +325,16 @@
             }
         }
     }
+    
+    // 先初始化当前chess，然后初始化其他chess
+    if(self.match.curChess && !self.match.curChess.done){
+        self.curChess = [YFChessBtn btnWith:self.match.curChess w:gap dele:self];
+        [self beginAddChess:self.curChess at:CGPointZero];
+        [self readyAddChess:self.curChess];
+        [self setHightLightedLines:@[self.xLines[self.curChess.mod.x],self.yLines[self.curChess.mod.y]] color:self.mod.hlLineColor];
+        
+    }
+    
 }
 
 -(void)initLines{

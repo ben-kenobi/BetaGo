@@ -45,7 +45,7 @@
     self.match = [[YFMatch alloc]initMatchWith:(int)lines];
 }
 - (void)loadData {
-    self.match = [YFMatchList.shared selectedMatch];
+    self.match = [YFMatchList.newInstance selectedMatch];
 }
 
 -(void)setMatch:(YFMatch *)match{
@@ -111,7 +111,7 @@
     [UIViewController.topVC presentViewController:vc animated:YES completion:0];
 }
 -(void)dashboard:(YFGoDashBoard *)dashboard saveClick:(UIButton *)btn{
-    [YFMatchList.shared saveMatch:self.match];
+    [YFMatchList.newInstance saveMatch:self.match];
     btn.enabled = NO;
 }
 
