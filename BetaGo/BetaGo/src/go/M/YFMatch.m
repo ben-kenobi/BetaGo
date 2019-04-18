@@ -73,10 +73,15 @@
     return [self canPlayChess:self.curChess at:x y:y];
 }
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal{
-    NSArray<YFChessFragment *> * rmary = [self move:self.curChess toX:self.curChess.x y:self.curChess.y cal:cal];
+    return [self doneWith:self.curChess cal:cal];
+}
+
+
+-(NSArray<YFChessFragment *> *)doneWith:(YFChess *)chess cal:(BOOL)cal{
+    NSArray<YFChessFragment *> * rmary = [self move:chess toX:chess.x y:chess.y cal:cal];
     [self.curPlayer endRoundWith:rmary];
     [self.nextPlayer beginRound];
-    self.curChess.done = YES;
+    chess.done = YES;
     if(self.needFeedback){
         [YFGoUtil feedbackWhenChessDone];
     }

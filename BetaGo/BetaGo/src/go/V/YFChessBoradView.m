@@ -141,7 +141,7 @@
         BOOL b = [self.match canPlayThisRoundAt:x y:y];
         if(b){
             if(!self.match.needConfirm)
-                [self readyNEndAddChess:self.curChess];
+                [self readyNEndAddChess:self.curChess cal:YES];
             else
                 [self readyAddChess:self.curChess];
             return ;
@@ -153,7 +153,7 @@
     [self cancelCurChess];
 }
 -(void)confirmAddChess{
-    [self endAddChess:self.curChess];
+    [self endAddChess:self.curChess cal:YES];
 }
 
 
@@ -223,9 +223,9 @@
     btn.transform = CGAffineTransformMakeScale(1.5, 1.5);
 }
 
--(void)readyNEndAddChess:(YFChessBtn *)btn{
+-(void)readyNEndAddChess:(YFChessBtn *)btn cal:(BOOL)cal{
     [self readyAddChess:btn];
-    [self endAddChess:btn];
+    [self endAddChess:btn cal:cal];
 }
 
 -(void)readyAddChess:(YFChessBtn *)btn{
@@ -238,10 +238,10 @@
     [self setHightLightedLines:@[self.xLines[btn.mod.x],self.yLines[btn.mod.y]] color:self.mod.hlLineColor];
 }
 
--(void)endAddChess:(YFChessBtn *)btn{
+-(void)endAddChess:(YFChessBtn *)btn cal:(BOOL)cal{
     if(!btn) return;
     [self.chessBtns setObject:btn forKey:btn.mod];
-    NSArray<YFChessFragment *> *rmChessList = [self.match doneThisRound:YES];
+    NSArray<YFChessFragment *> *rmChessList = [self.match doneWith:btn.mod cal:cal];
     [self updateUIWithChessFragments:rmChessList];
     
     
@@ -323,7 +323,7 @@
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(count*.06 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
                     [self beginAddChess:btn at:CGPointZero];
-                    [self readyNEndAddChess:btn];
+                    [self readyNEndAddChess:btn cal:NO];
                 });
             }
         }

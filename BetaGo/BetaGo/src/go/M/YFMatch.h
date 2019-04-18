@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return 被提子的数组,相连的子为一个YFChessFragment
  */
 -(NSArray<YFChessFragment *> *)doneThisRound:(BOOL)cal;
-
+-(NSArray<YFChessFragment *> *)doneWith:(YFChess *)chess cal:(BOOL)cal;
 -(void)prevRound;
 -(YFPlayer *)curPlayer;
 
