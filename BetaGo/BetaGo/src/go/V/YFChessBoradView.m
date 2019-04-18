@@ -235,6 +235,7 @@
         btn.alpha = 1;
         btn.transform = CGAffineTransformIdentity;
     }];
+    [self setHightLightedLines:@[self.xLines[btn.mod.x],self.yLines[btn.mod.y]] color:self.mod.hlLineColor];
 }
 
 -(void)endAddChess:(YFChessBtn *)btn{
@@ -309,14 +310,16 @@
   
     
     int count = 0;
+    //最后一个落子
+    YFChessBtn *lastBtn = nil;
     for(int y=0;y<self.mod.numOfLines;y++){
         for(int x=0;x<self.mod.numOfLines;x++){
             YFChess *chess = [self.mod findChessAt:x y:y];
             if(chess){
                 count+=1;
                 YFChessBtn *btn = [YFChessBtn btnWith:chess w:gap dele:self];
-//                if(self.match.curChess && chess.round == self.match.curChess.round)
-//                    self.curChess = btn;
+                if(lastBtn.mod.round < btn.mod.round)
+                    lastBtn = btn;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(count*.06 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
                     [self beginAddChess:btn at:CGPointZero];
@@ -326,14 +329,17 @@
         }
     }
     
-    // 先初始化当前chess，然后初始化其他chess
-    if(self.match.curChess && !self.match.curChess.done){
-        self.curChess = [YFChessBtn btnWith:self.match.curChess w:gap dele:self];
-        [self beginAddChess:self.curChess at:CGPointZero];
-        [self readyAddChess:self.curChess];
-        [self setHightLightedLines:@[self.xLines[self.curChess.mod.x],self.yLines[self.curChess.mod.y]] color:self.mod.hlLineColor];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(count*.06 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-    }
+        if(self.match.curChess && !self.match.curChess.done){
+            self.curChess = [YFChessBtn btnWith:self.match.curChess w:self->gap dele:self];
+            [self beginAddChess:self.curChess at:CGPointZero];
+            [self readyAddChess:self.curChess];
+        }else{
+            self.curChess = lastBtn;
+        }
+    });
+   
     
 }
 
