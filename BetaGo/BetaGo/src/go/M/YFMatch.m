@@ -79,8 +79,11 @@
 
 -(NSArray<YFChessFragment *> *)doneWith:(YFChess *)chess cal:(BOOL)cal{
     NSArray<YFChessFragment *> * rmary = [self move:chess toX:chess.x y:chess.y cal:cal];
-    [self.curPlayer endRoundWith:rmary];
-    [self.nextPlayer beginRound];
+    if(cal){
+        [self.curPlayer endRoundWith:rmary];
+        [self.nextPlayer beginRound];
+    }
+    //done后则算下一轮，所有结算必须在下一轮开始前结算完毕
     chess.done = YES;
     if(self.needFeedback){
         [YFGoUtil feedbackWhenChessDone];
